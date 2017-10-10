@@ -10,35 +10,76 @@ import java_cup.runtime.*;  // defines Symbol
  */
 public class P2 {
     public static void main(String[] args) throws IOException {
-                                           // exception may be thrown by yylex
+	
+        // exception may be thrown by yylex
         // test all tokens
-        testAllTokens();
+        //testAllTokens();
         CharNum.num = 1;
 
+	// Redirect our test's output to p2output.txt
+
+	//System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream("p2output.txt"))));
+	//System.setErr(new PrintStream(new BufferedOutputStream(new FileOutputStream("p2output.txt"))));
         // ADD CALLS TO OTHER TEST METHODS HERE
+	testStrings("untermStringLitTest.in", "untermStringLitTest.out");
+	testStrings("badStringLitTest.in", "badStringLitTest.out");
+	testInts("badIntLitTest.in", "badIntLitTest.out");
     }
 
     /**
-     * testAllTokens
+     * testInts
      *
-     * Open and read from file allTokens.txt
-     * For each token read, write the corresponding string to allTokens.out
-     * If the input file contains all tokens, one per line, we can verify
-     * correctness of the scanner by comparing the input and output files
-     * (e.g., using a 'diff' command).
+     * 
      */
-    private static void testAllTokens() throws IOException {
+    private static void testInts(String in, String out) throws IOException {
         // open input and output files
         FileReader inFile = null;
         PrintWriter outFile = null;
         try {
-            inFile = new FileReader("allTokens.in");
-            outFile = new PrintWriter(new FileWriter("allTokens.out"));
+            inFile = new FileReader(in);
+            outFile = new PrintWriter(new FileWriter(out));
         } catch (FileNotFoundException ex) {
-            System.err.println("File allTokens.in not found.");
+            System.err.println("File " + in + " not found.");
             System.exit(-1);
         } catch (IOException ex) {
-            System.err.println("allTokens.out cannot be opened.");
+            System.err.println("File " + out + " cannot be opened.");
+            System.exit(-1);
+        }
+
+        // create and call the scanner
+        Yylex scanner = new Yylex(inFile);
+        Symbol token = scanner.next_token();
+        while (token.sym != sym.EOF) {
+            switch (token.sym) {
+            case sym.INTLITERAL:
+                outFile.println(((IntLitTokenVal)token.value).intVal);
+                break;
+            default:
+                outFile.println("unknown int");
+            } // end switch
+
+            token = scanner.next_token();
+        } // end while
+        outFile.close();
+    }
+
+    /**
+     * testStrings
+     *
+     * 
+     */
+    private static void testStrings(String in, String out) throws IOException {
+        // open input and output files
+        FileReader inFile = null;
+        PrintWriter outFile = null;
+        try {
+            inFile = new FileReader(in);
+            outFile = new PrintWriter(new FileWriter(out));
+        } catch (FileNotFoundException ex) {
+            System.err.println("File " + in + " not found.");
+            System.exit(-1);
+        } catch (IOException ex) {
+            System.err.println("File " + out + " cannot be opened.");
             System.exit(-1);
         }
 

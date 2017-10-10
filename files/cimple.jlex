@@ -61,6 +61,7 @@ DIGIT=[0-9]
 WHITESPACE=[\040\t]
 
 ESCAPECHAR = [\\][nt'\"?\\]
+BADESCAPECHAR = [\\][^nt'\"\\?]
 STRINGCHAR = ({ESCAPECHAR}|[^\n\\\"])
 
 RESERVE = bool|int|void|true|false|struct|cin|cout|if|else|while|return
@@ -93,32 +94,36 @@ return new Symbol(sym.EOF);
 
 \"{STRINGCHAR}*\n {
 		// Unterminated string literal
+
 		ErrMsg.fatal(yyline+1, CharNum.num,
                          "unterminated string literal ignored");
+		CharNum.num = 1;
 }
 
-\"({STRINGCHAR}|([\\][^nt'\"\\?]))*\" {
+\"({STRINGCHAR}|{BADESCAPECHAR})*\" {
 		// Bad String Literal
+		System.out.println(yytext());
 		ErrMsg.fatal(yyline+1, CharNum.num,
                          "string literal with bad escaped character ignored");
 		CharNum.num += yytext().length();
 }
 
 
-\"({STRINGCHAR}|([\\][^nt'\"\\?]))*\n {
+\"({STRINGCHAR}|{BADESCAPECHAR}|([\\]\n))*\n {
 		// Unterminated and bad String Literal
 		// MAKE SURE THAT A BACKSLASH THEN A NEWLINE DOESN'T WORK
 		ErrMsg.fatal(yyline+1, CharNum.num,
                          "unterminated string literal with bad escaped character ignored");
+		CharNum.num = 1;
 }
 
 {DIGIT}+  {
 	    int val;
-	    if((new Double(yytext())).doubleValue() > 2147483647) {
+	    if((new Double(yytext())).doubleValue() > Integer.MAX_VALUE) {
 		ErrMsg.warn(yyline+1, CharNum.num,
 			"integer literal too large; using max value");
-		val = 2147483647;
-		CharNum.num += 10; // Length of max int
+		val = Integer.MAX_VALUE;
+		CharNum.num += yytext().length(); // Length of max int
 	    }
 	    else {
             	val = (new Integer(yytext())).intValue();

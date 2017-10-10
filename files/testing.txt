@@ -24,7 +24,7 @@ badStringLitTest.in
 
 - The text file starts with valid string literals because they have valid escape characters. The valid strings should be outputted
 - Then there are invalid string literals because they have invalid escape characters. The respective error message should be outputted
-- Finally, the case where the string lit is both unterminated and bad is tested. The respective error message should be outputted.
+- Finally, the case where the string lit is both unterminated (EOF) and bad is tested. The respective error message should be outputted.
 
 Bad Integer Literal Testing
 badIntLitTest.in

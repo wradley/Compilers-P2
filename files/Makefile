@@ -36,7 +36,7 @@ ErrMsg.class: ErrMsg.java
 # to expected results
 ###
 test:
-	java -cp $(CP) P2 
+	java -cp $(CP) P2 > p2output.txt 2>&1
 	diff allTokens.in allTokens.out
 
 ###

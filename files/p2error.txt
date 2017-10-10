@@ -1,0 +1,16 @@
+2:1 ***ERROR*** unterminated string literal ignored
+3:1 ***ERROR*** unterminated string literal ignored
+4:1 ***ERROR*** unterminated string literal ignored
+5:11 ***ERROR*** unterminated string literal ignored
+6:1 ***ERROR*** unterminated string literal ignored
+8:1 ***ERROR*** unterminated string literal ignored
+7:1 ***ERROR*** unterminated string literal ignored
+8:1 ***ERROR*** string literal with bad escaped character ignored
+9:1 ***ERROR*** string literal with bad escaped character ignored
+10:1 ***ERROR*** string literal with bad escaped character ignored
+12:1 ***ERROR*** unterminated string literal with bad escaped character ignored
+13:1 ***ERROR*** string literal with bad escaped character ignored
+14:28 ***ERROR*** illegal character ignored: \
+15:1 ***ERROR*** unterminated string literal with bad escaped character ignored
+6:1 ***WARNING*** integer literal too large; using max value
+7:1 ***WARNING*** integer literal too large; using max value
