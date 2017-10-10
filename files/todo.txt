@@ -12,4 +12,4 @@ Testing (txt files)
 - comments
 - identifiers?
 - any weird combinations of the above
-- character counting
+- character counting and line

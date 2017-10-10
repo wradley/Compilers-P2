@@ -1,0 +1,14 @@
+"Valid \n"
+"Valid \t"
+"Valid \'"
+"Valid \""
+"Valid \?"
+"Valid\\string"
+"Invalid \"
+"Invalid \a"
+"Invalid \12"
+"\Invalid" token
+
+"very bad string \
+a "also \a bad string, the error should occur at char 3
+"\invalid
