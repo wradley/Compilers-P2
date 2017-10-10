@@ -4,8 +4,8 @@ import java_cup.runtime.*;  // defines Symbol
 
 /**
  * This program is to be used to test the Scanner.
- * This version is set up to test all tokens, but more code is needed to test 
- * other aspects of the scanner (e.g., input that causes errors, character 
+ * This version is set up to test all tokens, but more code is needed to test
+ * other aspects of the scanner (e.g., input that causes errors, character
  * numbers, values associated with tokens)
  */
 public class P2 {
@@ -14,7 +14,7 @@ public class P2 {
         // test all tokens
         testAllTokens();
         CharNum.num = 1;
-    
+
         // ADD CALLS TO OTHER TEST METHODS HERE
     }
 
@@ -47,8 +47,49 @@ public class P2 {
         Symbol token = scanner.next_token();
         while (token.sym != sym.EOF) {
             switch (token.sym) {
+            case sym.STRINGLITERAL:
+                outFile.println(((StrLitTokenVal)token.value).strVal);
+                break;
+            default:
+                outFile.println("unknown string");
+            } // end switch
+
+            token = scanner.next_token();
+        } // end while
+        outFile.close();
+    }
+
+    /**
+     * testAllTokens
+     *
+     * Open and read from file allTokens.txt
+     * For each token read, write the corresponding string to allTokens.out
+     * If the input file contains all tokens, one per line, we can verify
+     * correctness of the scanner by comparing the input and output files
+     * (e.g., using a 'diff' command).
+     */
+    private static void testAllTokens() throws IOException {
+        // open input and output files
+        FileReader inFile = null;
+        PrintWriter outFile = null;
+        try {
+            inFile = new FileReader("allTokens.in");
+            outFile = new PrintWriter(new FileWriter("allTokens.out"));
+        } catch (FileNotFoundException ex) {
+            System.err.println("File allTokens.in not found.");
+            System.exit(-1);
+        } catch (IOException ex) {
+            System.err.println("allTokens.out cannot be opened.");
+            System.exit(-1);
+        }
+
+        // create and call the scanner
+        Yylex scanner = new Yylex(inFile);
+        Symbol token = scanner.next_token();
+        while (token.sym != sym.EOF) {
+            switch (token.sym) {
             case sym.BOOL:
-                outFile.println("bool"); 
+                outFile.println("bool");
                 break;
 	    case sym.INT:
                 outFile.println("int");
@@ -57,20 +98,20 @@ public class P2 {
                 outFile.println("void");
                 break;
             case sym.TRUE:
-                outFile.println("true"); 
+                outFile.println("true");
                 break;
             case sym.FALSE:
-                outFile.println("false"); 
+                outFile.println("false");
                 break;
             case sym.STRUCT:
-                outFile.println("struct"); 
+                outFile.println("struct");
                 break;
             case sym.CIN:
-                outFile.println("cin"); 
+                outFile.println("cin");
                 break;
             case sym.COUT:
                 outFile.println("cout");
-                break;				
+                break;
             case sym.IF:
                 outFile.println("if");
                 break;
@@ -86,12 +127,12 @@ public class P2 {
             case sym.ID:
                 outFile.println(((IdTokenVal)token.value).idVal);
                 break;
-            case sym.INTLITERAL:  
+            case sym.INTLITERAL:
                 outFile.println(((IntLitTokenVal)token.value).intVal);
                 break;
-            case sym.STRINGLITERAL: 
+            case sym.STRINGLITERAL:
                 outFile.println(((StrLitTokenVal)token.value).strVal);
-                break;    
+                break;
             case sym.LCURLY:
                 outFile.println("{");
                 break;
@@ -118,13 +159,13 @@ public class P2 {
                 break;
             case sym.READ:
                 outFile.println(">>");
-                break;				
+                break;
             case sym.PLUSPLUS:
                 outFile.println("++");
                 break;
             case sym.MINUSMINUS:
                 outFile.println("--");
-                break;	
+                break;
             case sym.PLUS:
                 outFile.println("+");
                 break;
