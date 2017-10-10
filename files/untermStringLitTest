@@ -1,0 +1,8 @@
+"this is a valid string\n"
+"this is not valid
+"
+"this is also not legit
+validToken"
+"this is also not legit
+validToken
+"EOF before terminated string lit
