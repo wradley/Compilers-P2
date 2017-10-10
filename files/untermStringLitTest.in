@@ -1,8 +1,19 @@
-"this is a valid string\n"
+# Two unterminated strings. Error messages on line 3 and 4
+
 "this is not valid
 "
+
+# Unterminated string (line 9 char 1) followed by a validID followed by
+# another unterm string (line 10 char 8)
+
 "this is also not legit
-validToken"
+validID"
+
+# Unterm string (line 14 char 1) followed by a validID
+
 "this is also not legit
 validToken
+
+# Unterm string because EOF reached
+
 "EOF before terminated string lit

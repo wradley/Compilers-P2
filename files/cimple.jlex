@@ -83,7 +83,6 @@ return new Symbol(sym.EOF);
 %%
 
 ((//)|#)[^\n]*\n {
-	System.out.println("comment: " + yytext());
 	CharNum.num = 1;
 }
 

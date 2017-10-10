@@ -1,25 +1,8 @@
-comment: #These valid tokens test that escape characters can exist in a String Literal
-
-"Valid \n"
-"Valid \t"
-"Valid \'"
-"Valid \""
-"Valid \?"
-"Valid\\string"
-10:1 ***ERROR*** unterminated string literal ignored
-11:1 ***ERROR*** string literal with bad escaped character ignored
-comment: # Bad string lit
-
-12:1 ***ERROR*** string literal with bad escaped character ignored
-comment: // Bad string lit
-
-13:1 ***ERROR*** string literal with bad escaped character ignored
-identifier
-comment: // Bad string lit followed by a valid identifier. ID should be at line 12 charNum 12!
-
-14:1 ***ERROR*** unterminated string literal with bad escaped character ignored
-"This is unterminated \' and not bad	//"
-16:1 ***ERROR*** unterminated string literal with bad escaped character ignored
-abc
-17:5 ***ERROR*** unterminated string literal with bad escaped character ignored
-18:1 ***ERROR*** unterminated string literal with bad escaped character ignored
+3:1 ***ERROR*** unterminated string literal ignored
+4:1 ***ERROR*** unterminated string literal ignored
+9:1 ***ERROR*** unterminated string literal ignored
+validID
+10:8 ***ERROR*** unterminated string literal ignored
+14:1 ***ERROR*** unterminated string literal ignored
+validToken
+19:1 ***ERROR*** unterminated string literal ignored

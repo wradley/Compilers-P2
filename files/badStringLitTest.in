@@ -23,8 +23,7 @@
 "\Invalid" "This is unterminated \k and bad
 	
 // Both unterminated and bad as seen in the project description. 
-// abc should be recognized as a token, followed by a bad unterminated string at char 3
+// abc should be recognized as a token, followed by a bad unterminated (EOF reached) string at char 3
 
 "very bad string \
 abc "also \a bad unterm string, the error should occur at char 3
-

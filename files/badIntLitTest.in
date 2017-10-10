@@ -1,7 +1,16 @@
-15
-0
-int x = 15;
+15//valid int lit
+0//valid int lit (these comments should be ignored, and the int should be outputted)
+
+// This should not be recognized as an int
+// Instead should be a "-" token followed by a 1 int lit
 -1
+
+// This should not produce an error message
 2147483647
+
+// This should produce an error message, and Integer.MAX_VALUE should be outputted
 2147483648
+
+// This should produce an error message, and Integer.MAX_VALUE should be outputted
+// The following 1 should occur at char num 13 
 10000000000 1
