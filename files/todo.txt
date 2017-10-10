@@ -10,6 +10,11 @@ Testing (txt files)
 	
 - int literals and overflow
 - comments
-- identifiers?
-- any weird combinations of the above
+- identifiers (_ something)
 - character counting and line
+	- delete char counter in Jlex
+	- legit input file, compare file reader line number to token line number to prove lines are counted correct
+
+questions
+- testing char num (is what we have enough)
+

@@ -61,7 +61,7 @@ DIGIT=[0-9]
 WHITESPACE=[\040\t]
 
 ESCAPECHAR = [\\][nt'\"?\\]
-BADESCAPECHAR = [\\][^nt'\"\\?]
+BADESCAPECHAR = [\\][^tn'\"\\?\n]
 STRINGCHAR = ({ESCAPECHAR}|[^\n\\\"])
 
 RESERVE = bool|int|void|true|false|struct|cin|cout|if|else|while|return
@@ -69,8 +69,6 @@ RESERVE = bool|int|void|true|false|struct|cin|cout|if|else|while|return
 OTHERTOKENS = ["{}();,.+-*/!<>="]|"<<"|">>"|"++"|"--"|"&&"|"||"|"=="|"!="|"<="|">="
 
 IDENTIFIER = ({LETTER}|"_")({LETTER}|{DIGIT}|"_")*
-
-COMMENT = "//"|"#"
 
 %implements java_cup.runtime.Scanner
 %function next_token
@@ -83,6 +81,11 @@ return new Symbol(sym.EOF);
 %line
 
 %%
+
+((//)|#)[^\n]*\n {
+	System.out.println("comment: " + yytext());
+	CharNum.num = 1;
+}
 
 \"{STRINGCHAR}*\" {
 		String val = yytext();
@@ -102,14 +105,13 @@ return new Symbol(sym.EOF);
 
 \"({STRINGCHAR}|{BADESCAPECHAR})*\" {
 		// Bad String Literal
-		System.out.println(yytext());
 		ErrMsg.fatal(yyline+1, CharNum.num,
                          "string literal with bad escaped character ignored");
 		CharNum.num += yytext().length();
 }
 
 
-\"({STRINGCHAR}|{BADESCAPECHAR}|([\\]\n))*\n {
+\"({STRINGCHAR}|{BADESCAPECHAR})*[\\]?\n {
 		// Unterminated and bad String Literal
 		// MAKE SURE THAT A BACKSLASH THEN A NEWLINE DOESN'T WORK
 		ErrMsg.fatal(yyline+1, CharNum.num,
@@ -183,14 +185,13 @@ return new Symbol(sym.EOF);
 
 {IDENTIFIER} {
 	String val = yytext();
-	System.out.println("Value: " + val + " charnum: " + CharNum.num + " linenum: " + (yyline+1));
 	Symbol S = new Symbol(sym.ID,
 		new IdTokenVal(yyline+1, CharNum.num, val));
 	CharNum.num += yytext().length();
 	return S;
 }
 
-{COMMENT}[^\n]*\n {}
+
 
 {OTHERTOKENS} {
 	Symbol S = null;

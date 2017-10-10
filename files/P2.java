@@ -21,9 +21,9 @@ public class P2 {
 	//System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream("p2output.txt"))));
 	//System.setErr(new PrintStream(new BufferedOutputStream(new FileOutputStream("p2output.txt"))));
         // ADD CALLS TO OTHER TEST METHODS HERE
-	testStrings("untermStringLitTest.in", "untermStringLitTest.out");
+	//testStrings("untermStringLitTest.in", "untermStringLitTest.out");
 	testStrings("badStringLitTest.in", "badStringLitTest.out");
-	testInts("badIntLitTest.in", "badIntLitTest.out");
+	//testInts("badIntLitTest.in", "badIntLitTest.out");
     }
 
     /**
@@ -55,7 +55,7 @@ public class P2 {
                 outFile.println(((IntLitTokenVal)token.value).intVal);
                 break;
             default:
-                outFile.println("unknown int");
+                outFile.println("Non-integer token in Test");
             } // end switch
 
             token = scanner.next_token();
@@ -89,10 +89,13 @@ public class P2 {
         while (token.sym != sym.EOF) {
             switch (token.sym) {
             case sym.STRINGLITERAL:
-                outFile.println(((StrLitTokenVal)token.value).strVal);
+                System.out.println(((StrLitTokenVal)token.value).strVal); // This will be redirected to an output file
                 break;
+	    case sym.ID:
+                System.out.println(((IdTokenVal)token.value).idVal); // Valid identifiers will also be redirected to output file
+		break;
             default:
-                outFile.println("unknown string");
+                outFile.println("UNEXPECTED TOKEN IN TEST"); // We purposely only use String Literals and ID tokens in this test
             } // end switch
 
             token = scanner.next_token();

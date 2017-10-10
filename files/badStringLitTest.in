@@ -1,15 +1,30 @@
+//These valid tokens test that escape characters and comment symbols can exist in a String Literal
+
 "Valid \n"
 "Valid \t"
 "Valid \'"
 "Valid \""
 "Valid \?"
 "Valid\\string"
-"Invalid \"
-"Invalid \a"
-"Invalid \12"
-"\Invalid" token
+"This is valid \' # //"
 
-"This is unterminated \and bad
-"very bad string \ 
-a "also \a bad string, the error should occur at char 3
-"\invalid
+// This should be unterminated because \" is a valid escape character
+
+"Unterminated \"
+
+// Bad string lits
+
+"Invalid \a"	
+"Invalid \12"	
+
+// Bad string lit followed an unterminated and bad string lit. 
+// The second error should be at line 23 charNum 12
+
+"\Invalid" "This is unterminated \k and bad
+	
+// Both unterminated and bad as seen in the project description. 
+// abc should be recognized as a token, followed by a bad unterminated string at char 3
+
+"very bad string \
+abc "also \a bad unterm string, the error should occur at char 3
+
