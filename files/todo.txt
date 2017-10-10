@@ -1,0 +1,15 @@
+
+- rules for illegal string literals
+- errors!!!
+- integer overflow
+- brainstorm other testing
+
+Testing (txt files)
+- string literals
+	Note that a string literal that has a newline immediately after a backslash should be treated as having a bad escaped character and being unterminated. For example, given: 
+	
+- int literals and overflow
+- comments
+- identifiers?
+- any weird combinations of the above
+- character counting
