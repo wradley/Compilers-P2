@@ -91,7 +91,7 @@ return new Symbol(sym.EOF);
           	return S;
 }
 
-\"{STRINGCHAR}*\n`{
+\"{STRINGCHAR}*\n {
 		// Unterminated string literal
 		ErrMsg.fatal(yyline+1, CharNum.num,
                          "unterminated string literal ignored");
@@ -105,22 +105,22 @@ return new Symbol(sym.EOF);
 }
 
 
-\"(({STRINGCHAR}|([\\][^nt'\"\\?]))*\n {
+\"({STRINGCHAR}|([\\][^nt'\"\\?]))*\n {
 		// Unterminated and bad String Literal
 		// MAKE SURE THAT A BACKSLASH THEN A NEWLINE DOESN'T WORK
 		ErrMsg.fatal(yyline+1, CharNum.num,
                          "unterminated string literal with bad escaped character ignored");
 }
 
-{DIGIT}+  { 
+{DIGIT}+  {
 	    int val;
 	    if((new Double(yytext())).doubleValue() > 2147483647) {
-		ErrMsg.warning(yyline+1, CharNum.num,
-			"integer literal too large; using max value")
+		ErrMsg.warn(yyline+1, CharNum.num,
+			"integer literal too large; using max value");
 		val = 2147483647;
 		CharNum.num += 10; // Length of max int
 	    }
-	    else { 
+	    else {
             	val = (new Integer(yytext())).intValue();
 		CharNum.num += yytext().length();
             }
@@ -133,44 +133,44 @@ return new Symbol(sym.EOF);
 
 {WHITESPACE}+  { CharNum.num += yytext().length(); }
 
-{RESERVE} { 
+{RESERVE} {
 	Symbol S = null;
 
 	if(yytext().equals("bool")) {
-		S = new Symbol(sym.BOOL, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.BOOL, new TokenVal(yyline+1, CharNum.num));
 	}
 	if(yytext().equals("int")) {
-		S = new Symbol(sym.INT, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.INT, new TokenVal(yyline+1, CharNum.num));
 	}
 	if(yytext().equals("void")) {
-		S = new Symbol(sym.VOID, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.VOID, new TokenVal(yyline+1, CharNum.num));
 	}
 	if(yytext().equals("true")) {
-		S = new Symbol(sym.TRUE, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.TRUE, new TokenVal(yyline+1, CharNum.num));
 	}
 	if(yytext().equals("false")) {
-		S = new Symbol(sym.FALSE, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.FALSE, new TokenVal(yyline+1, CharNum.num));
 	}
 	if(yytext().equals("struct")) {
-		S = new Symbol(sym.STRUCT, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.STRUCT, new TokenVal(yyline+1, CharNum.num));
 	}
 	if(yytext().equals("cin")) {
-		S = new Symbol(sym.CIN, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.CIN, new TokenVal(yyline+1, CharNum.num));
 	}
 	if(yytext().equals("cout")) {
-		S = new Symbol(sym.COUT, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.COUT, new TokenVal(yyline+1, CharNum.num));
 	}
 	if(yytext().equals("if")) {
-		S = new Symbol(sym.IF, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.IF, new TokenVal(yyline+1, CharNum.num));
 	}
 	if(yytext().equals("else")) {
-		S = new Symbol(sym.ELSE, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.ELSE, new TokenVal(yyline+1, CharNum.num));
 	}
 	if(yytext().equals("while")) {
-		S = new Symbol(sym.WHILE, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.WHILE, new TokenVal(yyline+1, CharNum.num));
 	}
 	if(yytext().equals("return")) {
-		S = new Symbol(sym.RETURN, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.RETURN, new TokenVal(yyline+1, CharNum.num));
 	}
 	CharNum.num += yytext().length();
 	return S;
@@ -191,85 +191,85 @@ return new Symbol(sym.EOF);
 	Symbol S = null;
 
 	if(yytext().equals("{")) {
-		S = new Symbol(sym.LCURLY, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.LCURLY, new TokenVal(yyline+1, CharNum.num));
 	}
 	if(yytext().equals("}")) {
-		S = new Symbol(sym.RCURLY, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.RCURLY, new TokenVal(yyline+1, CharNum.num));
 	}
 	if(yytext().equals("(")) {
-		S = new Symbol(sym.LPAREN, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.LPAREN, new TokenVal(yyline+1, CharNum.num));
 	}
 	if(yytext().equals(")")) {
-		S = new Symbol(sym.RPAREN, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.RPAREN, new TokenVal(yyline+1, CharNum.num));
 	}
 	if(yytext().equals(";")) {
-		S = new Symbol(sym.SEMICOLON, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.SEMICOLON, new TokenVal(yyline+1, CharNum.num));
 	}
 	if(yytext().equals("}")) {
-		S = new Symbol(sym.RCURLY, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.RCURLY, new TokenVal(yyline+1, CharNum.num));
 	}
 	if(yytext().equals(",")) {
-		S = new Symbol(sym.COMMA, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.COMMA, new TokenVal(yyline+1, CharNum.num));
 	}
 	if(yytext().equals(".")) {
-		S = new Symbol(sym.DOT, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.DOT, new TokenVal(yyline+1, CharNum.num));
 	}
 	if(yytext().equals("+")) {
-		S = new Symbol(sym.PLUS, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.PLUS, new TokenVal(yyline+1, CharNum.num));
 	}
 	if(yytext().equals("-")) {
-		S = new Symbol(sym.MINUS, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.MINUS, new TokenVal(yyline+1, CharNum.num));
 	}
 	if(yytext().equals("*")) {
-		S = new Symbol(sym.TIMES, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.TIMES, new TokenVal(yyline+1, CharNum.num));
 	}
 	if(yytext().equals("/")) {
-		S = new Symbol(sym.DIVIDE, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.DIVIDE, new TokenVal(yyline+1, CharNum.num));
 	}
 	if(yytext().equals("!")) {
-		S = new Symbol(sym.NOT, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.NOT, new TokenVal(yyline+1, CharNum.num));
 	}
 	if(yytext().equals("<")) {
-		S = new Symbol(sym.LESS, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.LESS, new TokenVal(yyline+1, CharNum.num));
 	}
 	if(yytext().equals(">")) {
-		S = new Symbol(sym.GREATER, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.GREATER, new TokenVal(yyline+1, CharNum.num));
 	}
 	if(yytext().equals("=")) {
-		S = new Symbol(sym.ASSIGN, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.ASSIGN, new TokenVal(yyline+1, CharNum.num));
 	}
 	if(yytext().equals("<<")) {
-		S = new Symbol(sym.WRITE, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.WRITE, new TokenVal(yyline+1, CharNum.num));
 	}
 	if(yytext().equals(">>")) {
-		S = new Symbol(sym.READ, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.READ, new TokenVal(yyline+1, CharNum.num));
 	}
 	if(yytext().equals("++")) {
-		S = new Symbol(sym.PLUSPLUS, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.PLUSPLUS, new TokenVal(yyline+1, CharNum.num));
 	}
 	if(yytext().equals("--")) {
-		S = new Symbol(sym.MINUSMINUS, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.MINUSMINUS, new TokenVal(yyline+1, CharNum.num));
 	}
 	if(yytext().equals("&&")) {
-		S = new Symbol(sym.AND, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.AND, new TokenVal(yyline+1, CharNum.num));
 	}
 	if(yytext().equals("||")) {
-		S = new Symbol(sym.OR, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.OR, new TokenVal(yyline+1, CharNum.num));
 	}
 	if(yytext().equals("}")) {
-		S = new Symbol(sym.RCURLY, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.RCURLY, new TokenVal(yyline+1, CharNum.num));
 	}
 	if(yytext().equals("==")) {
-		S = new Symbol(sym.EQUALS, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.EQUALS, new TokenVal(yyline+1, CharNum.num));
 	}
 	if(yytext().equals("!=")) {
-		S = new Symbol(sym.NOTEQUALS, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.NOTEQUALS, new TokenVal(yyline+1, CharNum.num));
 	}
 	if(yytext().equals("<=")) {
-		S = new Symbol(sym.LESSEQ, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.LESSEQ, new TokenVal(yyline+1, CharNum.num));
 	}
 	if(yytext().equals(">=")) {
-		S = new Symbol(sym.GREATEREQ, new TokenVal(yyline+1, CharNum.num)); 
+		S = new Symbol(sym.GREATEREQ, new TokenVal(yyline+1, CharNum.num));
 	}
 	CharNum.num += yytext().length();
 	return S;
@@ -279,4 +279,3 @@ return new Symbol(sym.EOF);
                          "illegal character ignored: " + yytext());
             CharNum.num++;
           }
-
