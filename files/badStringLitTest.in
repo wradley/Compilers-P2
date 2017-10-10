@@ -15,7 +15,7 @@
 // Bad string lits
 
 "Invalid \a"	
-"Invalid \12"	
+"Invalid \12"
 
 // Bad string lit followed an unterminated and bad string lit. 
 // The second error should be at line 23 charNum 12
@@ -27,3 +27,7 @@
 
 "very bad string \
 abc "also \a bad unterm string, the error should occur at char 3
+
+// Finally, we test an illegal character "~" followed by an "`"
+// The second error should be on line 33 char 2
+~`

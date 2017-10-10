@@ -11,6 +11,7 @@ else
 while
 return
 identifier
+_
 123
 "this is a correct string"
 {

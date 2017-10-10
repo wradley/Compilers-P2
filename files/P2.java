@@ -13,39 +13,45 @@ public class P2 {
 
         // exception may be thrown by yylex
         // test all tokens
-        //testAllTokens();
+        testAllTokens();
         CharNum.num = 1;
 
 	// Redirect our test's output to p2output.txt
+	switch(args[0]) {
+	case "untermStringLitTest.in":
+		testStrings("untermStringLitTest.in");
+		break;
+	case "badStringLitTest.in":
+		testStrings("badStringLitTest.in");
+		break;
+	case "badIntLitTest.in":
+		testInts("badIntLitTest.in");
+		break;
+	default:
+		System.out.println("[" + args[0] + "] not a specified test.");
+		break;
+	}
 
-	//System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream("p2output.txt"))));
-	//System.setErr(new PrintStream(new BufferedOutputStream(new FileOutputStream("p2output.txt"))));
+
         // ADD CALLS TO OTHER TEST METHODS HERE
-	//testStrings("untermStringLitTest.in", "untermStringLitTest.out");
-	testStrings("badStringLitTest.in", "badStringLitTest.out");
-	//testInts("badIntLitTest.in", "badIntLitTest.out");
     }
 
     /**
      * testInts
      *
-     * Open and read from (String: in) and write to (String: out).
-     * For each int literal, copy it directly to the output file. If a
-     * bad int literal is found then we will write "unknown int" to the file
-     * instead.
+     * Read integer input from an input text file.
+     * For each int literal, copy it directly to the output file if it is valid.
+     * Else, output the correct error message if the int literal is invalid.
+     * If any non int tokens are found it will print an error message.
+     *
      */
-    private static void testInts(String in, String out) throws IOException {
+    private static void testInts(String in)throws IOException {
         // open input and output files
         FileReader inFile = null;
-        PrintWriter outFile = null;
         try {
             inFile = new FileReader(in);
-            outFile = new PrintWriter(new FileWriter(out));
         } catch (FileNotFoundException ex) {
             System.err.println("File " + in + " not found.");
-            System.exit(-1);
-        } catch (IOException ex) {
-            System.err.println("File " + out + " cannot be opened.");
             System.exit(-1);
         }
 
@@ -55,36 +61,33 @@ public class P2 {
         while (token.sym != sym.EOF) {
             switch (token.sym) {
             case sym.INTLITERAL:
-                outFile.println(((IntLitTokenVal)token.value).intVal);
+                System.out.println(((IntLitTokenVal)token.value).intVal);
                 break;
             default:
-                outFile.println("Non-integer token in Test");
+                System.out.println("ERROR: NON-INT TOKEN IN TEST");
             } // end switch
 
             token = scanner.next_token();
         } // end while
-        outFile.close();
     }
 
     /**
      * testStrings
      *
-     * Open and read from file (String: in) and write to (String: out).
+     * Read an input file for String literals.
      * For each correct string, write it directly to the output. If there are any
-     * bad strings, write out that a bad string was found.
+     * bad strings, or unterminated strings, the error will be written to output.
+     * The tests also accepts identifiers.
+     * Anything but String ltierals and identifiers will produce an error message.
+     *
      */
-    private static void testStrings(String in, String out) throws IOException {
+    private static void testStrings(String in) throws IOException {
         // open input and output files
         FileReader inFile = null;
-        PrintWriter outFile = null;
         try {
             inFile = new FileReader(in);
-            outFile = new PrintWriter(new FileWriter(out));
         } catch (FileNotFoundException ex) {
             System.err.println("File " + in + " not found.");
-            System.exit(-1);
-        } catch (IOException ex) {
-            System.err.println("File " + out + " cannot be opened.");
             System.exit(-1);
         }
 
@@ -100,12 +103,11 @@ public class P2 {
                 System.out.println(((IdTokenVal)token.value).idVal); // Valid identifiers will also be redirected to output file
 		break;
             default:
-                outFile.println("UNEXPECTED TOKEN IN TEST"); // We purposely only use String Literals and ID tokens in this test
+                System.out.println("ERROR: UNEXPECTED TOKEN IN TEST"); // We purposely only use String Literals and ID tokens in this test
             } // end switch
 
             token = scanner.next_token();
         } // end while
-        outFile.close();
     }
 
     /**

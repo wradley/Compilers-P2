@@ -36,8 +36,13 @@ ErrMsg.class: ErrMsg.java
 # to expected results
 ###
 test:
-	java -cp $(CP) P2 > p2output.txt 2>&1
+	java -cp $(CP) P2 untermStringLitTest.in > untermStringLitTest.out 2>&1
+	java -cp $(CP) P2 badStringLitTest.in > badStringLitTest.out 2>&1
+	java -cp $(CP) P2 badIntLitTest.in > badIntLitTest.out 2>&1
 	diff allTokens.in allTokens.out
+	diff untermStringLitTest.out untermStringLitTest.expect
+	diff badStringLitTest.out badStringLitTest.expect
+	diff badIntLitTest.out badIntLitTest.expect
 
 ###
 # clean up
@@ -47,4 +52,5 @@ clean:
 	rm -f *~ *.class cimple.jlex.java
 
 cleantest:
-	rm -f allTokens.out
+	#rm -f allTokens.out
+	rm -f *.out

@@ -1,0 +1,9 @@
+15
+0
+ERROR: NON-INT TOKEN IN TEST
+1
+2147483647
+12:1 ***WARNING*** integer literal too large; using max value
+2147483647
+15:1 ***WARNING*** integer literal too large; using max value
+2147483647
