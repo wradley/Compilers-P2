@@ -10,7 +10,7 @@ import java_cup.runtime.*;  // defines Symbol
  */
 public class P2 {
     public static void main(String[] args) throws IOException {
-	
+
         // exception may be thrown by yylex
         // test all tokens
         //testAllTokens();
@@ -29,7 +29,10 @@ public class P2 {
     /**
      * testInts
      *
-     * 
+     * Open and read from (String: in) and write to (String: out).
+     * For each int literal, copy it directly to the output file. If a
+     * bad int literal is found then we will write "unknown int" to the file
+     * instead.
      */
     private static void testInts(String in, String out) throws IOException {
         // open input and output files
@@ -66,7 +69,9 @@ public class P2 {
     /**
      * testStrings
      *
-     * 
+     * Open and read from file (String: in) and write to (String: out).
+     * For each correct string, write it directly to the output. If there are any
+     * bad strings, write out that a bad string was found.
      */
     private static void testStrings(String in, String out) throws IOException {
         // open input and output files
